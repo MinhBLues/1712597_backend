@@ -6,7 +6,7 @@ import { Task } from '../entity/task.entity';
 import { TaskService } from '../service/task.service';
 
 @Controller('tasks')
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 @ApiBearerAuth()
 export class TaskController {
     constructor(private tasksService: TaskService){}

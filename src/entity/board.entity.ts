@@ -23,4 +23,7 @@ export class Board extends BaseEntity {
     )
     user: User;
 
+    @Column()
+    userId: number;
+
 }
