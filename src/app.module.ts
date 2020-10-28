@@ -6,7 +6,7 @@ import { AuthModule } from './module/auth.module';
 import { BoardModule } from './module/board.module';
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeOrmConfig),
+    TypeOrmModule.forRoot(typeOrmConfig), // đây nữa
     TaskModule,
     BoardModule,
     AuthModule],
