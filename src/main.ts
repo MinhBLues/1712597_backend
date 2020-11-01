@@ -9,10 +9,7 @@ async function bootstrap() {
     .setTitle('Board example')
     .setDescription('The API Board')
     .setVersion('1.0')
-    .addBearerAuth(
-{ type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' },
-'access-token',
-)
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

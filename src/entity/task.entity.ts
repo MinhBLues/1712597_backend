@@ -27,6 +27,12 @@ import {
   
     @Column()
     num_like: number;
+
+    @Column()
+    boardId: number;
+
+    @Column()
+    userCreateId: number;
   
     @ManyToOne(
       type => Board,
@@ -35,9 +41,16 @@ import {
     )
     board: Board;
   
-    @OneToOne(() => User)
-    @JoinColumn()
-    public user_create: User;
+    @ManyToOne(
+      type => User,
+      user => user.tasks,
+      { eager: false },
+    )
+    user_create: User;
+
+    // @OneToOne(() => User)
+    // @JoinColumn()
+    // public user_create: User;
   
     @OneToMany(type => Comment, comment => comment.task, {eager: true})
       comments: Comment[];

@@ -1,9 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { NotContains, IsString, Matches, MaxLength, MinLength, IsNotEmpty } from "class-validator";
 
 export class AuthCredentialDTO{
+
+    @IsString() 
+    @IsNotEmpty()
+    @ApiProperty({type:String , description:'display name'})
+    display_name:string;
+
     @IsString() 
     @MinLength(4)
+    @NotContains(' ', {message:'Username should not contain a space'})
     @MaxLength(20)
     @ApiProperty({type:String , description:'username'})
     username:string;

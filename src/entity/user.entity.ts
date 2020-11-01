@@ -10,6 +10,9 @@ export class User extends BaseEntity {
     id: number;
 
     @Column()
+    display_name: string
+
+    @Column()
     username: string;
 
     @Column()
@@ -20,6 +23,9 @@ export class User extends BaseEntity {
 
     @OneToMany(type => Board, board => board.user, {eager: true})
     boards: Board[];
+
+    @OneToMany(type => Task, task => task.user_create, {eager: true})
+    tasks: Task[];
 
     async validatorPassword(password: string): Promise<boolean> {
         const hash = await bcrypt.hash(password, this.salt);
