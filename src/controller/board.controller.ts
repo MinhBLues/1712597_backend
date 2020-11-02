@@ -32,8 +32,8 @@ export class BoardController {
 
     @Post('create')
     @UsePipes(ValidationPipe)
-    createBoard(@Body('title') { title }: BoardDTO, @GetUser() user: User): Promise<Board> {
-        return this.boardService.createBoard(title, user);
+    createBoard(@Body() boardDTO: BoardDTO, @GetUser() user: User): Promise<Board> {
+        return this.boardService.createBoard(boardDTO, user);
     }
 
     @Patch('/:id/update')

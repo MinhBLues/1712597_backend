@@ -18,8 +18,8 @@ export class BoardService {
         return await this.boardReponsitory.findOne({where:{id, userId:user.id}});
     }
 
-    async createBoard(title: string, user: User): Promise<Board> {
-        return await this.boardReponsitory.createBoard(title, user);
+    async createBoard(boardDTO: BoardDTO, user: User): Promise<Board> {
+        return await this.boardReponsitory.createBoard(boardDTO, user);
     }
 
     async getBoards(user: User): Promise<Board[]> {
