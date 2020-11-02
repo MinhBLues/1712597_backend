@@ -5,6 +5,7 @@ import { AuthCredentialDTO } from '../dto/auth-credentials.dto';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/entity/user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthSignInDTO } from 'src/dto/auth-signin.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -28,8 +29,8 @@ export class AuthController {
     }
 
     @Post('/signin')
-    // @ApiBody({type: AuthCredentialDTO})
-    signIn(@Body(ValidationPipe) authCredentialDTO : AuthCredentialDTO): Promise<{accessToken:string}>{
-        return this.authService.signIn(authCredentialDTO);
+    @ApiBody({type: AuthSignInDTO})
+    signIn(@Body(ValidationPipe) authSignInDTO : AuthSignInDTO): Promise<{accessToken:string}>{
+        return this.authService.signIn(authSignInDTO);
     }
 }

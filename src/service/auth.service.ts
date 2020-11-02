@@ -5,6 +5,7 @@ import { JwtPayload } from '../interface/jwt-payload.interface';
 import { AuthCredentialDTO } from '../dto/auth-credentials.dto';
 import { UserRepository } from '../reponsitory/user.reponsitory';
 import { User } from 'src/entity/user.entity';
+import { AuthSignInDTO } from 'src/dto/auth-signin.dto';
 
 @Injectable()
 export class AuthService {
@@ -27,8 +28,8 @@ export class AuthService {
         return {accessToken}; 
     }
 
-    async signIn(authCredentialDTO: AuthCredentialDTO): Promise<{accessToken:string}>{
-        const username = await this.userRepository.validatorUserPassword(authCredentialDTO);
+    async signIn(authSignInDTO: AuthSignInDTO): Promise<{accessToken:string}>{
+        const username = await this.userRepository.validatorUserPassword(authSignInDTO);
         
         if(!username){
             throw new UnauthorizedException('Invalid credentials');

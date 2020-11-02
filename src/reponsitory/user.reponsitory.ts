@@ -3,6 +3,7 @@ import { EntityRepository, Repository } from "typeorm";
 import { AuthCredentialDTO } from "../dto/auth-credentials.dto";
 import { User } from "../entity/user.entity";
 import * as bcrypt from 'bcrypt';
+import { AuthSignInDTO } from "src/dto/auth-signin.dto";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
@@ -43,8 +44,8 @@ export class UserRepository extends Repository<User>{
         );
     }
 
-    async validatorUserPassword(authCredentialDTO: AuthCredentialDTO): Promise<string> {
-        const { username, password } = authCredentialDTO;
+    async validatorUserPassword(authSignInDTO: AuthSignInDTO): Promise<string> {
+        const { username, password } = authSignInDTO;
         const user = await this.findOne({ username })
         if (user && await user.validatorPassword(password)) {
             return user.username;
