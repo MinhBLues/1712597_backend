@@ -29,4 +29,12 @@ export class TaskService {
     async updateTask(id: number, taskDto: UpdateTaskDTO): Promise<Task> {
         return this.taskReponsitory.updateTask(id, taskDto);
     }
+
+    async deleteTask(id: number): Promise<void> {
+        const result = await this.taskReponsitory.delete(id);
+
+        if (result.affected === 0) {
+            throw new NotFoundException(`Board with id ${id} not found`);
+        }
+    }
 }

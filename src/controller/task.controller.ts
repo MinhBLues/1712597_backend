@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { UpdateTaskDTO } from 'src/dto/update_task.dto';
@@ -18,7 +18,7 @@ export class TaskController {
         return this.tasksService.getTaskById(id);
     }
 
-    @Post()
+    @Post('create')
     @UsePipes(ValidationPipe)
     @ApiOkResponse({ description: 'Create success task' })
     createTask(@Body() createTask: CreateTaskDTO): Promise<Task> {
@@ -30,5 +30,10 @@ export class TaskController {
         @Param('id', ParseIntPipe) id: number,
         @Body() taskDto: UpdateTaskDTO,): Promise<Task> {
         return this.tasksService.updateTask(id, taskDto);
+    }
+
+    @Delete('/:id/delete')
+    deleteTask(@Param('id', ParseIntPipe) id: number):Promise<void>{
+        return this.tasksService.deleteTask(id);
     }
 }
