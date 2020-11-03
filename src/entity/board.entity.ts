@@ -13,7 +13,7 @@ export class Board extends BaseEntity {
     @Column({ nullable: true })
     date: Date = new Date;
 
-    @OneToMany(type => Task, task => task.board, {eager: true})
+    @OneToMany(type => Task, task => task.board, {eager: true, cascade: true})
     tasks: Task[];
    
     @ManyToOne(

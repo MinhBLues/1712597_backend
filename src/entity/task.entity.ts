@@ -52,7 +52,7 @@ import {
     // @JoinColumn()
     // public user_create: User;
   
-    @OneToMany(type => Comment, comment => comment.task, {eager: true})
+    @OneToMany(type => Comment, comment => comment.task, {eager: true, cascade: true})
       comments: Comment[];
   
   }
