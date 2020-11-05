@@ -21,7 +21,7 @@ export class AuthCredentialDTO{
     @MaxLength(20,{message:MessageConstants.ER04})
     @Matches(
         /((?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
-        {message:'Password too week'},
+        {message:MessageConstants.ER05},
     )
     @ApiProperty({type:String , description:'Password'})
     password:string;
