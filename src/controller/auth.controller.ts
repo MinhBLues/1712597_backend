@@ -24,13 +24,13 @@ export class AuthController {
 
     @Post('/signup')
     @ApiBody({type: AuthCredentialDTO})
-    signUp(@Body(ValidationPipe) authCredentialDTO : AuthCredentialDTO): Promise<{accessToken:string}>{
+    signUp(@Body(ValidationPipe) authCredentialDTO : AuthCredentialDTO): Promise<{accessToken:string, user:User}>{
         return this.authService.signUp(authCredentialDTO);
     }
 
     @Post('/signin')
     @ApiBody({type: AuthSignInDTO})
-    signIn(@Body(ValidationPipe) authSignInDTO : AuthSignInDTO): Promise<{accessToken:string}>{
+    signIn(@Body(ValidationPipe) authSignInDTO : AuthSignInDTO): Promise<{accessToken:string, user:User}>{
         return this.authService.signIn(authSignInDTO);
     }
 }

@@ -8,7 +8,7 @@ import { AuthSignInDTO } from "src/dto/auth-signin.dto";
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
 
-    async signUp(authCredentialDTO: AuthCredentialDTO): Promise<string> {
+    async signUp(authCredentialDTO: AuthCredentialDTO): Promise<{user:User}> {
         const { display_name, username, password } = authCredentialDTO;
 
 
@@ -19,7 +19,7 @@ export class UserRepository extends Repository<User>{
         user.password = await this.hashPassword(password, user.salt);
         try {
             await user.save();
-            return user.username;
+            return {user};
         } catch (err) {
             if (err.code === '23505') {
                 throw new ConflictException('Username already exists');
@@ -44,11 +44,11 @@ export class UserRepository extends Repository<User>{
         );
     }
 
-    async validatorUserPassword(authSignInDTO: AuthSignInDTO): Promise<string> {
+    async validatorUserPassword(authSignInDTO: AuthSignInDTO): Promise<{user:User}> {
         const { username, password } = authSignInDTO;
         const user = await this.findOne({ username })
         if (user && await user.validatorPassword(password)) {
-            return user.username;
+            return {user};
         }
         else
             return null;
