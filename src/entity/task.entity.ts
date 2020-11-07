@@ -23,7 +23,7 @@ import {
     description: string;
   
     @Column()
-    status: TaskStatus;
+    status: TaskStatus.OPEN;
   
     @Column()
     num_like: number;

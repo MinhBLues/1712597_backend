@@ -9,7 +9,7 @@ export class UpdateTaskDTO {
 
     @IsNotEmpty()
     @ApiProperty({ type: Number, description: 'status' })
-    status: TaskStatus;
+    status: TaskStatus.OPEN;
 
     @IsNotEmpty()
     @ApiProperty({ type: Number, description: 'like' })
