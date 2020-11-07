@@ -8,7 +8,7 @@ export class UpdateTaskDTO {
     description: string;
 
     @IsNotEmpty()
-    @ApiProperty({ type: TaskStatus.DONE, description: 'status' })
+    @ApiProperty({ type: Number, description: 'status' })
     status: TaskStatus;
 
     @IsNotEmpty()
