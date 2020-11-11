@@ -34,7 +34,7 @@ export class TaskService {
         const result = await this.taskReponsitory.delete(id);
 
         if (result.affected === 0) {
-            throw new NotFoundException(`Board with id ${id} not found`);
+            throw new NotFoundException(`Task with id ${id} not found`);
         }
     }
 }
