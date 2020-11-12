@@ -37,14 +37,14 @@ import {
     @ManyToOne(
       type => Board,
       board => board.tasks,
-      { eager: false },
+      { eager: false , onDelete: "CASCADE"},
     )
     board: Board;
   
     @ManyToOne(
       type => User,
       user => user.tasks,
-      { eager: false },
+      { eager: false, onDelete:"SET NULL" },
     )
     user_create: User;
 

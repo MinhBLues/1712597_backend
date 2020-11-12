@@ -21,10 +21,10 @@ export class User extends BaseEntity {
     @Column()
     salt: string;
 
-    @OneToMany(type => Board, board => board.user, {eager: true, cascade: true})
+    @OneToMany(type => Board, board => board.user, {eager: true, cascade: true,  onDelete: 'CASCADE' })
     boards: Board[];
 
-    @OneToMany(type => Task, task => task.user_create, {eager: true, cascade: true})
+    @OneToMany(type => Task, task => task.user_create, {eager: true, cascade: true, onDelete: 'CASCADE'})
     tasks: Task[];
 
     async validatorPassword(password: string): Promise<boolean> {

@@ -19,7 +19,7 @@ export class Board extends BaseEntity {
     @ManyToOne(
         type => User,
         user => user.boards,
-        { eager: false },
+        { eager: false , onDelete: "CASCADE"},
     )
     user: User;
 

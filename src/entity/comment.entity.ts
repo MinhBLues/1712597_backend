@@ -18,7 +18,7 @@ import {
     @ManyToOne(
       type => Task,
       task => task.comments,
-      { eager: false },
+      { eager: false, onDelete: "CASCADE"},
     )
     task: Task;
   }
