@@ -20,14 +20,14 @@ export class TaskRepository extends Repository<Task> {
         return task;
     }
     async createTask(createTaskDTO: CreateTaskDTO): Promise<Task> {
-        const { description, userCreateId, boardId } = createTaskDTO;
+        const { description, userCreateId, boardId , status} = createTaskDTO;
 
         const task = new Task();
         task.description = description;
         task.userCreateId = userCreateId;
         task.boardId = boardId;
         task.num_like = 0;
-        task.status = TaskStatus.OPEN;
+        task.status = status;
         await task.save();
 
         return task;
