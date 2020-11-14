@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { StatusTaskDTO } from 'src/dto/update_status_task.dto';
 import { UpdateTaskDTO } from 'src/dto/update_task.dto';
 import { CreateTaskDTO } from '../dto/create_task.dto';
 import { Task } from '../entity/task.entity';
@@ -35,7 +36,7 @@ export class TaskController {
     @Patch('/:id/updateStatus')
     updateStatus(
         @Param('id', ParseIntPipe) id: number,
-        @Body() status: number,): Promise<void> {
+        @Body() {status}: StatusTaskDTO,): Promise<void> {
         return this.tasksService.updateStatus(id, status);
     }
 
