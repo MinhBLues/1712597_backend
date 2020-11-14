@@ -26,14 +26,21 @@ export class TaskController {
     }
 
     @Patch('/:id/update')
-    updateBoard(
+    updateTask(
         @Param('id', ParseIntPipe) id: number,
         @Body() taskDto: UpdateTaskDTO,): Promise<Task> {
         return this.tasksService.updateTask(id, taskDto);
     }
 
+    @Patch('/:id/updateStatus')
+    updateStatus(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() status: number,): Promise<void> {
+        return this.tasksService.updateStatus(id, status);
+    }
+
     @Delete('/:id/delete')
-    deleteTask(@Param('id', ParseIntPipe) id: number):Promise<void>{
+    deleteTask(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return this.tasksService.deleteTask(id);
     }
 }

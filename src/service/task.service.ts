@@ -30,6 +30,15 @@ export class TaskService {
         return this.taskReponsitory.updateTask(id, taskDto);
     }
 
+    async updateStatus(id: number, status: number): Promise<void> {
+        await this.taskReponsitory.update(
+            { id: id },
+            {
+                status: status
+            }
+        );
+    }
+
     async deleteTask(id: number): Promise<void> {
         const result = await this.taskReponsitory.delete(id);
 
