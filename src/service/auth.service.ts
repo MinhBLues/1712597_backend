@@ -6,6 +6,7 @@ import { AuthCredentialDTO } from '../dto/auth-credentials.dto';
 import { UserRepository } from '../reponsitory/user.reponsitory';
 import { User } from 'src/entity/user.entity';
 import { AuthSignInDTO } from 'src/dto/auth-signin.dto';
+import { UpdateUserDTO } from 'src/dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -41,8 +42,8 @@ export class AuthService {
         return {accessToken, user};
     }
 
-    async update(authCredentialDTO:AuthCredentialDTO, user:User):Promise<void>{
-        await this.userRepository.updateUser(authCredentialDTO,user);
+    async update(userUpdate:UpdateUserDTO, user:User):Promise<void>{
+        await this.userRepository.updateUser(userUpdate,user);
     }
 }
 

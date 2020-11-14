@@ -6,6 +6,7 @@ import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/entity/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthSignInDTO } from 'src/dto/auth-signin.dto';
+import { UpdateUserDTO } from 'src/dto/update-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -15,11 +16,11 @@ export class AuthController {
     }
 
     @Post('/update')
-    @ApiBody({type:AuthCredentialDTO})
+    @ApiBody({type:UpdateUserDTO})
     @UseGuards(AuthGuard())
     @ApiBearerAuth()
-    update(@Body(ValidationPipe)authCredentialDTO: AuthCredentialDTO,@GetUser()user:User):Promise<void>{
-        return this.authService.update(authCredentialDTO,user );
+    update(@Body(ValidationPipe)userUpdate: UpdateUserDTO,@GetUser()user:User):Promise<void>{
+        return this.authService.update(userUpdate,user );
     }
 
     @Post('/signup')

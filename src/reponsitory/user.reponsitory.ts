@@ -4,11 +4,12 @@ import { AuthCredentialDTO } from "../dto/auth-credentials.dto";
 import { User } from "../entity/user.entity";
 import * as bcrypt from 'bcrypt';
 import { AuthSignInDTO } from "src/dto/auth-signin.dto";
+import { UpdateUserDTO } from "src/dto/update-user.dto";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
 
-    async signUp(authCredentialDTO: AuthCredentialDTO): Promise<{user:User}> {
+    async signUp(authCredentialDTO: AuthCredentialDTO): Promise<{ user: User }> {
         const { display_name, username, password } = authCredentialDTO;
 
 
@@ -19,7 +20,7 @@ export class UserRepository extends Repository<User>{
         user.password = await this.hashPassword(password, user.salt);
         try {
             await user.save();
-            return {user};
+            return { user };
         } catch (err) {
             if (err.code === '23505') {
                 throw new ConflictException('Username already exists');
@@ -29,26 +30,40 @@ export class UserRepository extends Repository<User>{
         }
     }
 
-    async updateUser(authCredentialDTO: AuthCredentialDTO, user: User): Promise<void> {
-        const { display_name, password } = authCredentialDTO;
+    async updateUser(authCredentialDTO: UpdateUserDTO, user: User): Promise<void> {
+        const { display_name, old_password, new_password } = authCredentialDTO;
 
-        user.password = await this.hashPassword(password, user.salt);
         user.display_name = display_name;
-        console.log(user)
-        await this.update(
-            { id: user.id },
-            {
-                display_name: user.display_name,
-                password:user.password
+
+
+        if (old_password.length > 0) {
+            if (! await user.validatorPassword(old_password)) {
+                throw new ConflictException("Old password wrong")
             }
-        );
+            user.password = await this.hashPassword(new_password, user.salt);
+            await this.update(
+                { id: user.id },
+                {
+                    display_name: user.display_name,
+                    password: user.password
+                }
+            );
+        }
+        else {
+            await this.update(
+                { id: user.id },
+                {
+                    display_name: user.display_name,
+                }
+            );
+        }
     }
 
-    async validatorUserPassword(authSignInDTO: AuthSignInDTO): Promise<{user:User}> {
+    async validatorUserPassword(authSignInDTO: AuthSignInDTO): Promise<{ user: User }> {
         const { username, password } = authSignInDTO;
         const user = await this.findOne({ username })
         if (user && await user.validatorPassword(password)) {
-            return {user};
+            return { user };
         }
         else
             return null;
