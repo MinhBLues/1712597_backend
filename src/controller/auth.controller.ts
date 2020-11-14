@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiHeader } from '@nestjs/swagger';
 import { AuthService } from '../service/auth.service';
 import { AuthCredentialDTO } from '../dto/auth-credentials.dto';
@@ -19,7 +19,7 @@ export class AuthController {
     @ApiBody({type:UpdateUserDTO})
     @UseGuards(AuthGuard())
     @ApiBearerAuth()
-    update(@Body(ValidationPipe)userUpdate: UpdateUserDTO,@GetUser()user:User):Promise<void>{
+    update(@Body(ValidationPipe)userUpdate: UpdateUserDTO,@GetUser() user:User):Promise<void>{
         return this.authService.update(userUpdate,user );
     }
 
@@ -33,5 +33,12 @@ export class AuthController {
     @ApiBody({type: AuthSignInDTO})
     signIn(@Body(ValidationPipe) authSignInDTO : AuthSignInDTO): Promise<{accessToken:string, user:User}>{
         return this.authService.signIn(authSignInDTO);
+    }
+
+    @Get('/getUser')
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
+    getUSer(@GetUser() user:User): Promise<{ id: Number, display_name: String, username:String }>{
+        return this.authService.getUser(user);
     }
 }
