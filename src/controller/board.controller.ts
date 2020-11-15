@@ -26,7 +26,7 @@ export class BoardController {
     }
 
     @Get('/:id')
-    getBoardById(@Param('id',ParseIntPipe)id:number, @GetUser()user:User){
+    getBoardById(@Param('id',ParseIntPipe)id:number, @GetUser() user:User){
         return this.boardService.getBoardById(id, user);
     }
 

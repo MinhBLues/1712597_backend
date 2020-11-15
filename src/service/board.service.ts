@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { timeLog } from "console";
 import { BoardDTO } from "src/dto/board.dto";
 import { Board } from "src/entity/board.entity";
-import { Task } from "src/entity/task.entity";
 import { User } from "src/entity/user.entity";
 import { BoardRepository } from "src/reponsitory/board.reponsitory";
 
@@ -15,7 +13,7 @@ export class BoardService {
     ) { }
 
     async getBoardById(id:number, user:User):Promise<Board>{
-        return await this.boardReponsitory.findOne({where:{id, userId:user.id}});
+        return await this.boardReponsitory.getBoardById(id, user);
     }
 
     async createBoard(boardDTO: BoardDTO, user: User): Promise<Board> {
