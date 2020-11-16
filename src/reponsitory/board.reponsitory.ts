@@ -29,7 +29,7 @@ export class BoardRepository extends Repository<Board> {
 
   async getBoardById(id: number, user: User): Promise<Board> {
 
-    let board = await this.findOne({ id: id });
+    const board = await this.findOne({ id: id });
     if (!board) {
       throw new NotFoundException(`Board with id ${id} not found`);
     }

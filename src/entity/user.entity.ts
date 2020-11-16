@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BaseEntity, Column, Entity, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { Board } from "./board.entity";
 import { Task } from "./task.entity";
@@ -20,6 +20,9 @@ export class User extends BaseEntity {
 
     @Column()
     salt: string;
+
+    @Column({ nullable:true })
+    googleId: string;
 
     @OneToMany(type => Board, board => board.user, {eager: true, cascade: true,  onDelete: 'CASCADE' })
     boards: Board[];

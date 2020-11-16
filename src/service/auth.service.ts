@@ -7,9 +7,12 @@ import { UserRepository } from '../reponsitory/user.reponsitory';
 import { User } from 'src/entity/user.entity';
 import { AuthSignInDTO } from 'src/dto/auth-signin.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
+import { AuthGoogleDTO } from 'src/dto/auth-google.dto';
+import { AuthSignUpGoogleDTO } from 'src/dto/google-signUp.dto';
 
 @Injectable()
 export class AuthService {
+    
     constructor(
         @InjectRepository(UserRepository)
         private userRepository: UserRepository,
@@ -46,9 +49,23 @@ export class AuthService {
         await this.userRepository.updateUser(userUpdate, user);
     }
 
-    async getUser(user: User): Promise<{ id: Number, display_name: string, username: string }> {
+    async getUser(user: User): Promise<{ id: number, display_name: string, username: string }> {
         const { id, display_name, username } = await this.userRepository.findOne({ id: user.id })
         return { id, display_name, username };
     }
+
+    async getUserByGooleId(authGoogleDTO: AuthGoogleDTO): Promise<{accessToken:string; user: User; }> {
+        const {username,googleId} = authGoogleDTO;
+
+        const user = await this.userRepository.findOne({googleId});
+
+        if (!user) {
+            throw new UnauthorizedException('Invalid credentials');
+        }
+        const payload: JwtPayload = { username };
+        const accessToken = this.jwtService.sign(payload);
+        return { accessToken, user };
+    }
+    
 }
 

@@ -10,14 +10,19 @@ import { UpdateUserDTO } from "src/dto/update-user.dto";
 export class UserRepository extends Repository<User>{
 
     async signUp(authCredentialDTO: AuthCredentialDTO): Promise<{ user: User }> {
-        const { display_name, username, password } = authCredentialDTO;
+        const { display_name, username, password, googleId } = authCredentialDTO;
+        let user = await this.findOne({googleId});
 
+        if (user) {
+            throw new ConflictException('GoogleId already exists');
+        }
 
-        const user = new User();
+        user = new User();
         user.display_name = display_name
         user.username = username
         user.salt = await bcrypt.genSalt();
         user.password = await this.hashPassword(password, user.salt);
+        user.googleId = googleId.length > 0 ? googleId : null;
         try {
             await user.save();
             return { user };

@@ -6,7 +6,7 @@ export class AuthSignInDTO{
     @IsString() 
     @MinLength(4)
     @NotContains(' ', {message:'Username should not contain a space'})
-    @MaxLength(20)
+    // @MaxLength(20)
     @ApiProperty({type:String , description:'username'})
     username:string;
 

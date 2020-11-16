@@ -7,6 +7,8 @@ import { User } from 'src/entity/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthSignInDTO } from 'src/dto/auth-signin.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
+import { AuthSignUpGoogleDTO } from 'src/dto/google-signUp.dto';
+import { AuthGoogleDTO } from 'src/dto/auth-google.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -35,10 +37,16 @@ export class AuthController {
         return this.authService.signIn(authSignInDTO);
     }
 
+    @Post('/google/signin')
+    @ApiBody({type: AuthGoogleDTO})
+    getUserByGooleId(@Body(ValidationPipe) authGoogleDTO : AuthGoogleDTO): Promise<{accessToken:string, user:User}>{
+        return this.authService.getUserByGooleId(authGoogleDTO);
+    }
+
     @Get('/getUser')
     @UseGuards(AuthGuard())
     @ApiBearerAuth()
-    getUSer(@GetUser() user:User): Promise<{ id: Number, display_name: String, username:String }>{
+    getUSer(@GetUser() user:User): Promise<{ id: number, display_name: string, username:string }>{
         return this.authService.getUser(user);
     }
 }
