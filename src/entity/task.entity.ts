@@ -31,7 +31,7 @@ import {
     @Column()
     boardId: number;
 
-    @Column()
+    @Column({ nullable:true })
     userCreateId: number;
   
     @ManyToOne(
